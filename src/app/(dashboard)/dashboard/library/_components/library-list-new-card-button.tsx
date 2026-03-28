@@ -42,12 +42,10 @@ const LibraryListNewCardButton = () => {
             const library = await createLibrary({
                 ...values,
             })
-            // 不显示是因为没有添加<Toast/>
-            toast.success(`创建成功`)
-            // 个人用不做user等相关功能
-            router(`/malred/${library.id}`)
-            // router.refresh()
-
+            if (library) {
+                toast.success(`创建成功`)
+                router(`/malred/${library.id}`)
+            }
         } catch (err) {
             toast.error(`Something went wrong`)
             console.error('Something went wrong', err);

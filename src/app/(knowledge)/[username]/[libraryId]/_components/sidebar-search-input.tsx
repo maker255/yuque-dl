@@ -21,7 +21,7 @@ import {GoPlus} from "react-icons/go";
 import {LuBookMarked, LuClipboardPenLine, LuTableProperties} from "react-icons/lu";
 import {FcImport, FcPuzzle} from "react-icons/fc";
 import {RiRobot2Line} from "react-icons/ri";
-import {Library, Note} from '@prisma/client';
+import {Library, Note} from '@/lib/types';
 import SidebarSearchInputCommandItem
     from "@/app/(knowledge)/[username]/[libraryId]/_components/sidebar-search-input-command-item";
 import SidebarSearchInputNewDocItem

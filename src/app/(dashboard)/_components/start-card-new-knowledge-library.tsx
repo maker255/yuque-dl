@@ -66,8 +66,10 @@ const StartCardNewKnowledgeLibrary = () => {
                             const library = await createLibrary({
                                 name, description
                             })
-                            router(`/malred/${library.id}`)
-                            toast.success(`创建成功`)
+                            if (library) {
+                                router(`/malred/${library.id}`)
+                                toast.success(`创建成功`)
+                            }
                         }}
                         disabled={!name}
                         className={`text-white font-bold hover:bg-green-700 bg-green-500 w-full`}

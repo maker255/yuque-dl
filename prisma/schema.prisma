@@ -73,21 +73,6 @@ model Note {
   groupId String?
   group   Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
-  NoteHistory NoteHistory[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// 知识库笔记历史记录
-model NoteHistory {
-  id   String @id @default(cuid())
-  // 内容(富文本) - 类型为LongText
-  text String @db.LongText
-
-  noteId String
-  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -5,9 +5,9 @@ import {db} from "@/lib/db"
 import {getNoteById} from "@/lib/utils/db"
 
 interface Props {
-    parentNoteId?: number
-    groupId?: number
-    libraryId: number
+    parentNoteId?: string
+    groupId?: string
+    libraryId: string
 }
 
 export const createNote = async (value: Props) => {
@@ -44,11 +44,5 @@ export const createNote = async (value: Props) => {
 
     console.log(res.lastInsertId)
 
-    await db.execute(
-        `insert into notehistory (text, noteId)
-         values ($1, $2)`,
-        ['', res.lastInsertId]
-    )
-
-    return await getNoteById(res.lastInsertId!)
-}
+    return await getNoteById(res.lastInsertId!.toString())
+    }

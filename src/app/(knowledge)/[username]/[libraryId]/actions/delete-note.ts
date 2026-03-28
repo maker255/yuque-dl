@@ -4,7 +4,7 @@
 import { db } from "@/lib/db"
 // import {API_BASE_PATH} from "@/lib/constants.ts";
 
-export const deleteNote = async (id: number) => {
+export const deleteNote = async (id: string) => {
     // const res = await fetch(`${API_BASE_PATH}/api/db/note/${id}`, {
     //     method: 'DELETE',
     // })

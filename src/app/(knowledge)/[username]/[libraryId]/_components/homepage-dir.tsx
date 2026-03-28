@@ -1,27 +1,25 @@
 // src/app/(knowledge)/[username]/[libraryId]/_components/homepage-dir.tsx
 
-// import {Library, Note} from "@prisma/client";
 import { Library, Note } from "@/lib/types";
 import HomepageDirItem from "@/app/(knowledge)/[username]/[libraryId]/_components/homepage-dir-item";
 import { useEffect, useState } from "react";
 import { getNotesById } from "@/lib/utils/db.ts";
 
-const HomepageDir = ({ library }: { library: Library & { Note: Note[] } }) => {
+const HomepageDir = ({ library }: { library: Library }) => {
     const [notes, setNotes] = useState<Note[]>([])
 
     useEffect(() => {
         (async () => {
             let notes: Note[] = []
-            // @ts-ignore
-            if (library?.Note && library?.Note.length > 0) {
-                // @ts-ignore
-                for (let note of library?.Note) {
-                    // @ts-ignore
-                    notes.push(await getNotesById(note.id))
+            if (library?.notes && library?.notes.length > 0) {
+                for (let note of library?.notes) {
+                    const fullNote = await getNotesById(note.id)
+                    if (fullNote) {
+                        notes.push(fullNote)
+                    }
                 }
             }
             setNotes(notes)
-            // console.log(notes)
         })()
     }, [library]);
 

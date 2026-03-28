@@ -14,9 +14,7 @@ import {MantineProvider} from '@mantine/core';
 import DashboardPage from "@/app/(dashboard)/dashboard/dashboardPage.tsx";
 import KnowledgeLibraryPage from "@/app/(knowledge)/[username]/[libraryId]/knowledgeLibraryPage.tsx";
 import KnowledgeNotePage from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/knowledgeNotePage.tsx";
-import NoteHistoryPage from "@/app/(knowledge)/[username]/history/[libraryId]/[noteId]/noteHistoryPage.tsx";
 import {Toaster} from "react-hot-toast";
-import AiChatPage from "@/app/(ai)/chat.tsx";
 import ColabPage from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/colab/colab-page.tsx";
 import {QueryClientProvider, QueryClient} from "@tanstack/react-query";
 
@@ -30,15 +28,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
                     <Router>
                         <Routes>
                             <Route path="/" element={<App/>}/>
-                            <Route path={'ai/chat'} element={<AiChatPage/>}/>
                             <Route path=':username'>
-                                <Route path={'history'}>
-                                    <Route path={':libraryId'}>
-                                        <Route path={':noteId'}>
-                                            <Route path={''} element={<NoteHistoryPage/>}/>
-                                        </Route>
-                                    </Route>
-                                </Route>
                                 <Route path={':libraryId'}>
                                     <Route path={''} element={<KnowledgeLibraryPage/>}/>
                                     <Route path={':noteId'}>

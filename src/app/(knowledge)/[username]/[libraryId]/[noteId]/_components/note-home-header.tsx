@@ -9,8 +9,6 @@ import {BsChatText} from "react-icons/bs";
 import {AiOutlineInsertRowRight} from "react-icons/ai";
 import NoteHomeHeaderEditButton
     from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-home-header-edit-button";
-import NoteHomeHeaderAIButton
-    from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-home-header-ai-button";
 import {Tabs, TabsContent, TabsList} from "@/components/ui/tabs"
 import {
     Sheet,
@@ -20,7 +18,6 @@ import {
 
 import {Separator} from "@/components/ui/separator";
 import {BsSliders2} from "react-icons/bs";
-import {FaClockRotateLeft} from "react-icons/fa6";
 import {VscNotebookTemplate} from "react-icons/vsc";
 import {LiaFileExportSolid} from "react-icons/lia";
 import {
@@ -30,7 +27,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-// import ExportWordItem from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/export-word-item";
 import ExportPdfItem from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/export-pdf-item";
 import ExportMdItem from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/export-md-item";
 
@@ -45,10 +41,9 @@ const NoteHomeHeader = ({id, text, libraryId, name}: {
         <div className={`h-14 border-b p-2 flex justify-between items-center sticky top-0 z-50 bg-white`}>
             <NoteHomeHeaderNameInput id={id} name={name}/>
             <div className={`flex items-center gap-x-3`}>
-                <NoteHomeHeaderAIButton id={id} libraryId={libraryId}/>
                 {/*协作*/}
                 <Link to={`/malred/${libraryId}/${id}/colab`}>
-                <FaUserPlus className={`size-6`}/>
+                    <FaUserPlus className={`size-6`}/>
                 </Link>
                 <span/>
                 <span className={`py-1.5 h-8 px-4 font-semibold rounded-md text-sm border`}>
@@ -88,16 +83,6 @@ const NoteHomeHeader = ({id, text, libraryId, name}: {
                                         <VscNotebookTemplate className={`size-5`}/>
                                         <span>另存为模板</span>
                                     </div>
-                                    <Link
-                                        className={`w-full`}
-                                        to={`/malred/history/${libraryId}/${id}`}>
-                                        <div className={`p-2 rounded-md cursor-pointer
-                                            flex items-center hover:bg-slate-300/30 gap-x-2
-                                            `}>
-                                            <FaClockRotateLeft className={`size-5`}/>
-                                            <span>历史版本</span>
-                                        </div>
-                                    </Link>
                                     <div className={`p-2 rounded-md cursor-pointer
                                     flex items-center hover:bg-slate-300/30 gap-x-2
                                     `}>
@@ -111,9 +96,6 @@ const NoteHomeHeader = ({id, text, libraryId, name}: {
                                                     <DialogTitle>导出文档</DialogTitle>
                                                 </DialogHeader>
                                                 <div className={`flex flex-wrap justify-between space-x-4`}>
-                                                    {/*<ExportWordItem*/}
-                                                    {/*    content={text} title={name}*/}
-                                                    {/*/>*/}
                                                     <ExportPdfItem title={name}/>
                                                     <ExportMdItem
                                                         content={text} title={name}

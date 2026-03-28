@@ -31,12 +31,11 @@ const Sidebar = () => {
     let [library, setLibrary] = useState<Library | null>()
     useEffect(() => {
         (async () => {
-            // const res = await fetch(`${API_BASE_PATH}/api/db/library/${libraryId}`)
-            // const json = await res.json();
-            // setLibrary(json.library)
-            setLibrary(await getLibraryById(parseInt(libraryId!)))
+            if (libraryId) {
+                setLibrary(await getLibraryById(libraryId))
+            }
         })()
-    }, [searchParams])
+    }, [searchParams, libraryId])
 
     const [notes, setNotes] = useState<Note[]>([])
     useEffect(() => {
@@ -44,13 +43,13 @@ const Sidebar = () => {
             let notes: Note[] = []
             if (library?.notes && library?.notes.length > 0) {
                 for (let note of library?.notes) {
-                    // @ts-ignore
-                    notes.push(await getNotesById(note.id))
+                    const fullNote = await getNotesById(note.id)
+                    if (fullNote) {
+                        notes.push(fullNote)
+                    }
                 }
             }
             setNotes(notes)
-
-            // console.log(notes)
         })()
     }, [library]);
 
@@ -105,11 +104,8 @@ const Sidebar = () => {
             </div>
             <SidebarDirList
                 library={library}
-                libraryId={parseInt(libraryId!)}
-                // @ts-ignore
+                libraryId={libraryId!}
                 notes={notes}
-                // @ts-ignore
-                // groups={library?.Group!}
                 groups={library?.groups!}
             />
         </div>

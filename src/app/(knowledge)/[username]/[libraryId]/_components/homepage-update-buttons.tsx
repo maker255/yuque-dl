@@ -3,7 +3,6 @@
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -13,15 +12,8 @@ import { updateLibrary } from "@/app/(knowledge)/[username]/[libraryId]/actions/
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-// const HomepageUpdateButtons = ({ id, showDir, setShowDir, text }: {
-//     id: string
-//     text: string
-//     showDir: boolean;
-//     setShowDir: Function
-// }) => {
-
 const HomepageUpdateButtons = ({ id, text, showDir, description, name, setShowDir }: {
-    id: number
+    id: string
     name: string
     text: string
     showDir: boolean
@@ -29,7 +21,6 @@ const HomepageUpdateButtons = ({ id, text, showDir, description, name, setShowDi
     setShowDir: Function
 }) => {
     const router = useNavigate()
-    // const { id, text, showDir, description, name } = library
 
     return (
         <>
@@ -48,7 +39,6 @@ const HomepageUpdateButtons = ({ id, text, showDir, description, name, setShowDi
                             </span>
                         </div>
                     </DropdownMenuLabel>
-                    {/*不是item就不会点击后马上让dropdown关闭*/}
                     <div className={`p-2 flex gap-x-1 items-center`}>
                         <span>目录模块</span>
                         <Switch
@@ -58,21 +48,15 @@ const HomepageUpdateButtons = ({ id, text, showDir, description, name, setShowDi
                             }}
                         />
                     </div>
-                    {/* <DropdownMenuItem>
-                        <span>自定义模块</span>
-                        <Switch />
-                    </DropdownMenuItem> */}
                 </DropdownMenuContent>
             </DropdownMenu>
             <div className={`cursor-pointer p-2 border flex items-center rounded-md`}>
                 <span
                     onClick={async () => {
-                        // await updateLibrary({id, text, showDir}) 
                         await updateLibrary({
                             id, text, showDir, description, name
                         })
                         router(`/malred/${id}?random=${Math.random()}`)
-                        // router.refresh()
 
                         toast.success(`更新成功`)
                     }}

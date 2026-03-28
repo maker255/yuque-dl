@@ -2,7 +2,6 @@
 // import {API_BASE_PATH} from "@/lib/constants.ts";
 //import {fetch} from "@tauri-apps/plugin-http";
 import { db } from "@/lib/db"
-import { getNoteById } from "@/lib/utils/db"
 
 export const updateNote = async (value: {
     id: string

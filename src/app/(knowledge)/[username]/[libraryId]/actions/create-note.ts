@@ -4,7 +4,7 @@
 import { db } from "@/lib/db"
 import { getNoteById } from "@/lib/utils/db";
 
-export const createNote = async ({ libraryId }: { libraryId: number }) => {
+export const createNote = async ({ libraryId }: { libraryId: string }) => {
     // const res = await fetch(
     //     `${API_BASE_PATH}/api/db/note/library/${libraryId}`,
     //     {
@@ -21,12 +21,7 @@ export const createNote = async ({ libraryId }: { libraryId: number }) => {
         [
             libraryId, '无标题文档', ''
         ]
-    );
+        );
 
-    await db.execute(
-        `insert into notehistory (text, noteId) values($1, $2)`,
-        ['', res.lastInsertId]
-    )
-
-    return await getNoteById(res.lastInsertId!)
-}
+        return await getNoteById(res.lastInsertId!.toString())
+        }

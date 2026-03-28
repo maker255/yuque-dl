@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { Ellipsis, GripVertical } from "lucide-react";
 import { BsJournalBookmark } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { API_BASE_PATH } from "@/lib/constants.ts";
 // import {Library} from "@prisma/client";
 import { Library } from "@/lib/types";
 import { getLibraries } from "@/lib/utils/db";

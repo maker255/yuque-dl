@@ -2,7 +2,7 @@
 
 import { BsJournalBookmark } from "react-icons/bs";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
-import { Library } from "@prisma/client";
+import { Library } from "@/lib/types";
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import {
     DropdownMenu,
@@ -88,9 +88,7 @@ import HomepageDir from "@/app/(knowledge)/[username]/[libraryId]/_components/ho
 import { renderMathInText, renderRichTextWithHighlight } from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
 import Layout from "@/app/(knowledge)/[username]/[libraryId]/layout.tsx";
-import { API_BASE_PATH } from "@/lib/constants.ts";
-import { getLibraries, getLibraryById } from "@/lib/utils/db";
-//import {fetch} from "@tauri-apps/plugin-http";
+import { getLibraryById } from "@/lib/utils/db";
 
 const KnowledgeLibraryPage = () => {
     let params = useParams()
@@ -99,16 +97,15 @@ const KnowledgeLibraryPage = () => {
     let [library, setLibrary] = useState<Library | null>()
     useEffect(() => {
         (async () => {
-            // const res = await fetch(`${API_BASE_PATH}/api/db/library/${params.libraryId}`)
-            // const json = await res.json();
-            // setLibrary(json.library)
-            setLibrary(await getLibraryById(parseInt(params.libraryId!)))
+            if (params.libraryId) {
+                setLibrary(await getLibraryById(params.libraryId))
+            }
         })()
-    }, [searchParams])
+    }, [searchParams, params.libraryId])
+    
     if (!library) {
         return
     }
-    console.log(library)
 
     return (
         <Layout>
@@ -166,9 +163,7 @@ const KnowledgeLibraryPage = () => {
                                     />
                                 </div>
                             </div>
-                            {/* {library.showDir  && <HomepageDir */}
-                            {library.showDir !== 'false' && <HomepageDir
-                                // @ts-ignore
+                            {library.showDir && <HomepageDir
                                 library={library} />}
                         </>
                     )}

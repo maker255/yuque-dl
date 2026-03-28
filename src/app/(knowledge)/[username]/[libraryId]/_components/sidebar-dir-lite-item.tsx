@@ -23,7 +23,7 @@ import toast from "react-hot-toast";
 const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
     notes: Note[]
     level?: number
-    libraryId: number
+    libraryId: string
 }) => {
     // console.log(level, notes[0].parentNoteId, notes)
     const pathname = useLocation().pathname
@@ -46,19 +46,15 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
             toast.success(`重命名成功`)
         }
     }
-    console.log(notes)
 
     return (
         <>
-            {/*@ts-ignore*/}
             {notes && notes.length > 0 && notes.map((item) => (
-                <>
-                    {/*@ts-ignore*/}
+                <div key={item.id}>
                     {(item.childrenNote && item.childrenNote.length > 0) && (
                         <>
                             {(!editingId) && (
                                 <Accordion type="single" collapsible>
-                                    {/*<AccordionItem value="item-1" className={`p-0 border-none`}>*/}
                                     <AccordionItem value={item.id.toString()} className={`p-0 border-none`}>
                                         <AccordionTrigger
                                             key={item.id} className={`p-0 border-none`}>
@@ -91,10 +87,10 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                                                                 libraryId,
                                                                 parentNoteId: item.id
                                                             })
-                                                            router(`/malred/${libraryId}/${note.id}`)
-                                                            // router.refresh()
-
-                                                            toast.success(`新建成功`)
+                                                            if (note) {
+                                                                router(`/malred/${libraryId}/${note.id}`)
+                                                                toast.success(`新建成功`)
+                                                            }
                                                         }}
                                                     >
                                                         新建文档
@@ -103,7 +99,6 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                                                     <ContextMenuItem
                                                         onClick={async () => {
                                                             await deleteNote(item.id)
-                                                            // router.refresh()
                                                             toast.success('删除成功')
                                                         }}
                                                     >
@@ -116,7 +111,6 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                                             <SidebarDirLiteItem
                                                 key={item.id}
                                                 libraryId={libraryId}
-                                                // @ts-ignore
                                                 notes={item.childrenNote}
                                                 level={level + 1}
                                             />
@@ -133,7 +127,6 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                             )}
                         </>
                     )}
-                    {/*@ts-ignore*/}
                     {(!item.childrenNote || item.childrenNote.length === 0) && (
                         <>
                             {!editingId && (
@@ -164,7 +157,10 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                                                     libraryId,
                                                     parentNoteId: item.id
                                                 })
-                                                router(`/malred/${libraryId}/${note.id}`)
+                                                if (note) {
+                                                    router(`/malred/${libraryId}/${note.id}`)
+                                                    toast.success(`新建成功`)
+                                                }
                                             }}
                                         >
                                             新建文档
@@ -173,7 +169,6 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                                         <ContextMenuItem
                                             onClick={async () => {
                                                 await deleteNote(item.id)
-                                                // router.refresh()
                                                 toast.success(`删除成功`)
                                                 router(`/malred/${libraryId}/`)
                                             }}
@@ -193,7 +188,7 @@ const SidebarDirLiteItem = ({notes, libraryId, level = 0}: {
                             )}
                         </>
                     )}
-                </>
+                </div>
             ))}
         </>
     )

@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import NotesListEditedNotesTable from "@/app/(dashboard)/_components/notes-list-edited-notes-table";
 // import { API_BASE_PATH } from "@/lib/constants.ts";
 import { useSearchParams } from "react-router-dom";
-import { getNotes, getNotesWithLibrary } from '@/lib/utils/db';
+import { getNotesWithLibrary } from '@/lib/utils/db';
 import { Note } from '@/lib/types';
 //import {fetch} from "@tauri-apps/plugin-http";
 

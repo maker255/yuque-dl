@@ -1,7 +1,7 @@
 // src/lib/types.ts
 
 export type Library = {
-    id: number;
+    id: string;
     name: string;
     description: string;
     text: string;
@@ -9,40 +9,33 @@ export type Library = {
     createdAt: Date;
     updatedAt: Date;
 
+    parentLibraryId?: string | null;
     notes: Note[]
     groups: Group[]
 };
 
 export type Group = {
-    id: number;
+    id: string;
     name: string;
-    libraryId: number
+    libraryId: string
 
     createdAt: Date;
     updatedAt: Date;
 }
 
 export type Note = {
-    id: number;
+    id: string;
     name: string;
     level: number;
     text: string;
 
-    libraryId: number;
-    groupId: number;
-    parentNoteId: number;
+    libraryId: string;
+    groupId: string | null;
+    parentNoteId: string | null;
 
     childrenNote?: Note[]
     library?: Library
 
-    createdAt: Date;
-    updatedAt: Date;
-};
-
-export type NoteHistory = {
-    id: number;
-    text: string;
-    noteId: number;
     createdAt: Date;
     updatedAt: Date;
 };

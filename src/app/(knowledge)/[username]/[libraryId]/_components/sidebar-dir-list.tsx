@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const SidebarDirList = ({ libraryId, notes, groups }: {
-    libraryId: number
+    libraryId: string
     library: Library
     notes: Note[]
     groups: Group[] // todo
@@ -24,7 +24,9 @@ const SidebarDirList = ({ libraryId, notes, groups }: {
 
     const onClick = async () => {
         const note = await createNote({ libraryId })
-        router(`/malred/${libraryId}/${note.id}`)
+        if (note) {
+            router(`/malred/${libraryId}/${note.id}`)
+        }
     }
 
     return (
@@ -54,7 +56,6 @@ const SidebarDirList = ({ libraryId, notes, groups }: {
                 {open && (notes.length !== 0 || groups.length !== 0) && (
                     // {open && (!notes.length  || !groups.length ) && (
                     <div className={`w-full p-1`}>
-                        {/*@ts-ignore*/}
                         <SidebarDirLiteItem
                             libraryId={libraryId}
                             notes={notes}

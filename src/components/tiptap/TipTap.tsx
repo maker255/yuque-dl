@@ -1,19 +1,18 @@
 // src/components/tiptap/TipTap.tsx
 
 import Text from '@tiptap/extension-text'
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useEditorStore} from "@/hooks/use-editor-store";
 import {useEditor} from "@tiptap/react";
-import {API_BASE_PATH, getRandomColor, getRandomName, TiptapExtensions} from '@/lib/constants';
+import {getRandomColor, getRandomName, TiptapExtensions} from '@/lib/constants';
 import {Collaboration} from "@tiptap/extension-collaboration";
 import {CollaborationCursor} from "@tiptap/extension-collaboration-cursor";
-import {useCompletion} from "ai/react"; // pnpm i ai@3.4.33
 import {RichTextEditor} from '@mantine/tiptap';
 import StarterKit from '@tiptap/starter-kit';
 import {useDebounce} from "@/lib/useDebounce";
 
 import '@mantine/core/styles.css';
-import {generateImage, generateImageAPI, pasteImage} from "@/lib/utils";
+import {pasteImage} from "@/lib/utils";
 import MantineFloatingToolbar from "@/components/tiptap/bar/MantineFloatingToolbar";
 import MantineBubbleToolbar from "@/components/tiptap/bar/MantineBubbleToolbar";
 import BarItems from "@/components/tiptap/item/BarItems";
@@ -43,34 +42,6 @@ const TipTap = ({
                 Text.extend({
                     addKeyboardShortcuts() {
                         return {
-                            'Shift-a': () => {
-                                // console.log('activate AI')
-                                // take the last 30 words
-                                // const prompt = this.editor.getText().split(' ').slice(-30).join(' ')
-                                const prompt = this.editor.getText().slice(-120)
-                                // const prompt = this.editor.getText().slice(-30)
-                                // console.log(prompt)
-                                complete(prompt)
-                                return true
-                            },
-                            'Ctrl-shift-a': () => {
-                                const prompt = this.editor.getText().slice(-120);
-                                generateImageAPI(prompt)
-                                    .then(async response => {
-                                        const data = await response.json();
-                                        if (response.ok) {
-                                            console.log('Image URL:', data.url);
-                                            // 在页面上显示图片
-                                            generateImage(this.editor, data.url);
-                                        } else {
-                                            console.error('Error:', data.error);
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error('Fetch error:', error);
-                                    });
-                                return true
-                            },
                             'Ctrl-shift-s': () => {
                                 onChange(this.editor.getHTML())
                                 return true
@@ -110,34 +81,6 @@ const TipTap = ({
                 Text.extend({
                     addKeyboardShortcuts() {
                         return {
-                            'Shift-a': () => {
-                                // console.log('activate AI')
-                                // take the last 30 words
-                                // const prompt = this.editor.getText().split(' ').slice(-30).join(' ')
-                                const prompt = this.editor.getText().slice(-120)
-                                // const prompt = this.editor.getText().slice(-30)
-                                // console.log(prompt)
-                                complete(prompt)
-                                return true
-                            },
-                            'Ctrl-shift-a': () => {
-                                const prompt = this.editor.getText().slice(-120);
-                                generateImageAPI(prompt)
-                                    .then(async response => {
-                                        const data = await response.json();
-                                        if (response.ok) {
-                                            console.log('Image URL:', data.url);
-                                            // 在页面上显示图片
-                                            generateImage(this.editor, data.url);
-                                        } else {
-                                            console.error('Error:', data.error);
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error('Fetch error:', error);
-                                    });
-                                return true
-                            },
                             'Ctrl-shift-s': () => {
                                 onChange(this.editor.getHTML())
                                 return true
@@ -199,23 +142,6 @@ const TipTap = ({
             setEditor(editor)
         },
     })
-
-    // ai代写
-    const {complete, completion} = useCompletion({
-        api: `${API_BASE_PATH}/api/completion`,
-    })
-
-    const lastCompletion = useRef('')
-    useEffect(() => {
-        if (!editor || !completion) return
-        // 新的completion(ai之前生成的sentence + ai生成的新的char) 减去 上次的completion的长度
-        // 得出新的char
-        const diff = completion.slice(lastCompletion.current.length);
-        // 更新lastCompletion
-        lastCompletion.current = completion;
-        // 当前editor后面加上新char
-        editor.commands.insertContent(diff);
-    }, [completion, editor])
 
     // 防止编辑器未加载时操作出错
     // @ts-ignore

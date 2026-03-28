@@ -8,7 +8,7 @@ interface Props {
     text?: string
     description?: string
     showDir?: boolean
-    id: number
+    id: string
 }
 
 export const updateLibrary = async (values: Props) => {

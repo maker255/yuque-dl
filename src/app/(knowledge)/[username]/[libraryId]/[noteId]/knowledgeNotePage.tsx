@@ -70,7 +70,7 @@ lowlight.register('js', js)
 lowlight.register('ts', ts)
 
 import NoteHomeHeader from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-home-header";
-import NoteAiChat from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-ai-chat";
+// import NoteAiChat from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-ai-chat";
 import NoteEdit from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/note-edit";
 import OutlineButton from "@/app/(knowledge)/[username]/[libraryId]/[noteId]/_components/outline-button";
 import '@/app/(knowledge)/[username]/[libraryId]/style.scss'
@@ -78,9 +78,8 @@ import '@mantine/tiptap/styles.css';
 import { useParams, useSearchParams } from "react-router-dom";
 import { generateOutline, renderMathInText, renderRichTextWithHighlight } from "@/lib/utils.ts";
 import { useEffect, useState } from "react";
-import { Note } from "@prisma/client";
+import { Note } from "@/lib/types";
 import Layout from "@/app/(knowledge)/[username]/[libraryId]/layout.tsx";
-import { API_BASE_PATH } from "@/lib/constants.ts";
 // import '@/app/(knowledge)/[username]/[libraryId]/style.scss'
 import '@mantine/core/styles.css';
 import './note.css'
@@ -100,30 +99,16 @@ const KnowledgeNotePage = () => {
     }>()
     useEffect(() => {
         (async () => {
-            // const res = await fetch(
-            //     `${API_BASE_PATH}/api/db/note/${params.noteId}`,
-            // )
-            // const json = await res.json()
-            // setNote(json.note)
-            const get_note = await getNoteById(parseInt(params.noteId!))
-            setNote(get_note)
-
-            // if (!json.note) return
-            // const richText = renderRichTextWithHighlight(renderMathInText(json.note.text || ''))
-            const richText = renderRichTextWithHighlight(renderMathInText(get_note.text || ''))
-            // const data = await fetch(`${API_BASE_PATH}/api/outline/generate`, {
-            //     method: 'POST',
-            //     body: JSON.stringify({
-            //         richText
-            //     }),
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     }
-            // })
-            // setData(await data.json())
-            setData(await generateOutline(richText))
+            if (!params.noteId) return;
+            const get_note = await getNoteById(params.noteId)
+            if (get_note) {
+                setNote(get_note)
+                const richText = renderRichTextWithHighlight(renderMathInText(get_note.text || ''))
+                setData(await generateOutline(richText))
+            }
         })()
-    }, [searchParams]);
+    }, [searchParams, params.noteId]);
+    
     if (!data || !note) return
     let { rich, outline } = data
 
@@ -145,7 +130,7 @@ const KnowledgeNotePage = () => {
                                     <h1 className={`mx-6 my-1 mb-2 text-4xl font-semibold`}>
                                         无标题文档
                                     </h1> :
-                                    !note?.text && <h1 className={`mx-6 my-1 mb-2 text-4xl font-semibold`}>
+                                    <h1 className={`mx-6 my-1 mb-2 text-4xl font-semibold`}>
                                         {note?.name}
                                     </h1>
                                 }
@@ -176,12 +161,12 @@ const KnowledgeNotePage = () => {
                                 note={note!} />}
                     </div>
                 </div>
-                {(searchParams.get('type') === 'both' ||
+                {/* {(searchParams.get('type') === 'both' ||
                     searchParams.get('type') === 'ai-read') && <NoteAiChat
                         richText={note?.text || ''}
                         libraryId={params.libraryId!}
                         id={note?.id!}
-                    />}
+                    />} */}
             </div>
         </Layout>
     );

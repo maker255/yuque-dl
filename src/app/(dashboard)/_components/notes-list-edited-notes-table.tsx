@@ -20,7 +20,7 @@ import {HiEllipsisHorizontal} from "react-icons/hi2";
 import {FcRating} from "react-icons/fc";
 import {PiBroom} from "react-icons/pi";
 import {CiShare1} from "react-icons/ci";
-import {Note} from "@prisma/client";
+import {Note} from "@/lib/types";
 import {formatDistanceToNow} from "date-fns";
 import {zhCN} from "date-fns/locale/zh-CN";
 import {useNavigate} from "react-router-dom";

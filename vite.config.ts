@@ -40,4 +40,7 @@ export default defineConfig(async () => ({
     define: {
         "process.env.IS_PREACT": JSON.stringify("true"),
     },
+    build: {
+        target: 'esnext'
+    }
 }));
